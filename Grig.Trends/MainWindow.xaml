@@ -16,20 +16,20 @@
             <ColumnDefinition Width="130*"/>
             <ColumnDefinition Width="298*"/>
         </Grid.ColumnDefinitions>
-        <Button x:Name="countButton" Content="Посчитать" HorizontalAlignment="Left" Margin="91,398,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Button x:Name="countButton" Content="Count" HorizontalAlignment="Left" Margin="91,398,0,0" VerticalAlignment="Top" Width="75" Click="button_Click" Grid.ColumnSpan="2" Grid.Column="1"/>
         <Label x:Name="label" Content="URL" HorizontalAlignment="Left" Margin="44,14,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="uriTextBox" HorizontalAlignment="Left" Height="68" Margin="120,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="387" Grid.ColumnSpan="3"/>
         <Label x:Name="label1" Content="XPath" HorizontalAlignment="Left" Margin="44,97,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="xpathTextBox" HorizontalAlignment="Left" Height="23" Margin="120,100,0,0" TextWrapping="Wrap" Text="//*[contains(concat(' ', @class, ' '), 'doc__title')]/a" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-        <Label x:Name="label2" Content="Расстояние" HorizontalAlignment="Left" Margin="46,145,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="label2" Content="Distance" HorizontalAlignment="Left" Margin="46,145,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="distanceTextBox" HorizontalAlignment="Left" Height="23" Margin="120,148,0,0" TextWrapping="Wrap" Text="0,7" VerticalAlignment="Top" Width="75" Grid.ColumnSpan="2"/>
         <DataGrid x:Name="resultDataGrid" HorizontalAlignment="Left" Margin="44,187,0,0" VerticalAlignment="Top" Height="190" Width="463" AutoGenerateColumns="False" Grid.ColumnSpan="3">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Формы" Binding="{Binding Path=Forms, Converter={StaticResource ListToStringConverter}}" Width="400" />
-                <DataGridTextColumn Header="Число" Binding="{Binding Path=Count}" Width="63" />
+                <DataGridTextColumn Header="Forms" Binding="{Binding Path=Forms, Converter={StaticResource ListToStringConverter}}" Width="400" />
+                <DataGridTextColumn Header="Count" Binding="{Binding Path=Count}" Width="63" />
             </DataGrid.Columns>
         </DataGrid>
-        <Label x:Name="label3" Content="Минимальная длина слова" Grid.Column="1" HorizontalAlignment="Left" Margin="91,146,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="159"/>
+        <Label x:Name="label3" Content="Minimal word length" Grid.Column="1" HorizontalAlignment="Left" Margin="91,146,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="159"/>
         <TextBox x:Name="minCharsTextBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="158,149,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="62"/>
 
     </Grid>

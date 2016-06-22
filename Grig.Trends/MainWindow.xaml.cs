@@ -33,7 +33,7 @@ namespace Grig.Trends
             try
             {
                 Dispatcher.Invoke(() => {
-                    countButton.Content = "Загрузка...";
+                    countButton.Content = "Loading...";
                     countButton.IsEnabled = false;
                 });
                 
@@ -42,18 +42,18 @@ namespace Grig.Trends
                 if (string.IsNullOrEmpty(uriTextBox.Text))
                     throw new ArgumentNullException("URI");
                 if (string.IsNullOrEmpty(distanceTextBox.Text))
-                    throw new ArgumentNullException("Растояние");
+                    throw new ArgumentNullException("Distance");
                 double distance = 0;
                 if (!double.TryParse(distanceTextBox.Text, out distance))
-                    throw new ArgumentOutOfRangeException("Растояние", "может быть только числом");
+                    throw new ArgumentOutOfRangeException("Distance", "can be number only.");
                 if (distance > 1 || distance < 0)
-                    throw new ArgumentOutOfRangeException("Растояние", "может быть от 0 до 1");
+                    throw new ArgumentOutOfRangeException("Distance", "can be from 0 to 1");
 
                 int minChars = 0;
                 if (!int.TryParse(minCharsTextBox.Text, out minChars))
-                    throw new ArgumentOutOfRangeException("Минимальная длина слова", "может быть только целым числом");
+                    throw new ArgumentOutOfRangeException("Minimal word length", "can be integer only.");
                 if (minChars < 1)
-                    throw new ArgumentOutOfRangeException("Растояние", "не может быть меньше 1");
+                    throw new ArgumentOutOfRangeException("Distance", "can't be more than 1.");
 
                 FuzzySearcher fuzzySearcher = new FuzzySearcher();
                 PageService pageDownloader = new PageService();
@@ -70,22 +70,22 @@ namespace Grig.Trends
                     rankedWords = fuzzySearcher.RankWords(headersText, distance).Where(fg => fg.Forms.Any(f => f.Length >= minChars)).OrderByDescending(fg => fg.Count);
                 }
                 else
-                    MessageBox.Show("По указанному XPath ничего не найдено.");
+                    MessageBox.Show("Nothing was found by this XPath.");
                 resultDataGrid.ItemsSource = rankedWords;
             }
             catch (ArgumentNullException anex)
             {
-                MessageBox.Show(anex.ParamName + " не заполнен.");
+                MessageBox.Show(anex.ParamName + " is empty.");
             }
             catch (ArgumentOutOfRangeException aor)
             {
-                MessageBox.Show(aor.ParamName + (!string.IsNullOrEmpty(aor.Message) ? aor.Message : "имеет недопустимое значение."));
+                MessageBox.Show(aor.ParamName + (!string.IsNullOrEmpty(aor.Message) ? aor.Message : "is invalid."));
             }
             finally
             {
                 Dispatcher.Invoke(() =>
                 {
-                    countButton.Content = "Посчитать";
+                    countButton.Content = "Count";
                     countButton.IsEnabled = true;
                 });
             }
