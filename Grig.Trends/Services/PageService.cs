@@ -11,14 +11,15 @@ namespace Grig.Trends.Services
 {
     public class PageService
     {
-        public HtmlDocument Download(string uri)
+        public HtmlDocument Download(string uriStr)
         {
+            Uri uri = new Uri(uriStr.IndexOf("http") == 0 ? uriStr : ("http://" + uriStr));
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(DownloadString(uri));
             return document;
         }
 
-        private string DownloadString(string uri)
+        private string DownloadString(Uri uri)
         {
             WebClient client = new WebClient();
 

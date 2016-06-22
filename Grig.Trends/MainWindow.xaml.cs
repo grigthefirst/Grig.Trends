@@ -32,6 +32,11 @@ namespace Grig.Trends
         {
             try
             {
+                Dispatcher.Invoke(() => {
+                    countButton.Content = "Загрузка...";
+                    countButton.IsEnabled = false;
+                });
+                
                 if (string.IsNullOrEmpty(xpathTextBox.Text))
                     throw new ArgumentNullException("XPath");
                 if (string.IsNullOrEmpty(uriTextBox.Text))
@@ -56,19 +61,33 @@ namespace Grig.Trends
                 HtmlDocument page =
                     pageDownloader.Download(uriTextBox.Text);
 
-                var headersText = string.Join(" ", page.DocumentNode.SelectNodes(xpathTextBox.Text).Select(n => n.InnerText));
+                IEnumerable<FuzzyGroup> rankedWords = null;
 
-                IEnumerable<FuzzyGroup> rankedWords = fuzzySearcher.RankWords(headersText, distance).Where(fg => fg.Forms.Any(f => f.Length >= minChars)).OrderByDescending(fg => fg.Count);
-
+                HtmlNodeCollection nodes = page.DocumentNode.SelectNodes(xpathTextBox.Text);
+                if (nodes != null)
+                {
+                    var headersText = string.Join(" ", page.DocumentNode.SelectNodes(xpathTextBox.Text).Select(n => n.InnerText));
+                    rankedWords = fuzzySearcher.RankWords(headersText, distance).Where(fg => fg.Forms.Any(f => f.Length >= minChars)).OrderByDescending(fg => fg.Count);
+                }
+                else
+                    MessageBox.Show("По указанному XPath ничего не найдено.");
                 resultDataGrid.ItemsSource = rankedWords;
             }
             catch (ArgumentNullException anex)
             {
                 MessageBox.Show(anex.ParamName + " не заполнен.");
             }
-            catch(ArgumentOutOfRangeException aor)
+            catch (ArgumentOutOfRangeException aor)
             {
                 MessageBox.Show(aor.ParamName + (!string.IsNullOrEmpty(aor.Message) ? aor.Message : "имеет недопустимое значение."));
+            }
+            finally
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    countButton.Content = "Посчитать";
+                    countButton.IsEnabled = true;
+                });
             }
         }
     }
